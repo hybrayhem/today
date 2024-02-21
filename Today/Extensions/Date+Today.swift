@@ -9,7 +9,6 @@ import Foundation
 
 extension Date {
     var dayAndTimeText: String {
-        let timeText = formatted(date: .omitted, time: .shortened)
         if Locale.current.calendar.isDateInToday(self) {
             let timeFormat = NSLocalizedString("Today at %@", comment: "Today at time format string") // Comment provides context for localization
             return String(format: timeFormat, timeText)
@@ -19,6 +18,8 @@ extension Date {
             return String(format: dateAndTimeFormat, dateText, timeText)
         }
     }
+    
+    var timeText: String { formatted(date: .omitted, time: .shortened) }
     
     var dayText: String {
         if Locale.current.calendar.isDateInToday(self) {

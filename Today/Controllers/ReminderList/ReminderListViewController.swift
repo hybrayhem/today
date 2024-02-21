@@ -8,9 +8,6 @@
 import UIKit
 
 class ReminderListViewController: UICollectionViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, String> // diffable
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String> // same generics with data source
-    
     var dataSource: DataSource! // implicitly unwrap DataSource
     
     override func viewDidLoad() {
@@ -36,15 +33,7 @@ class ReminderListViewController: UICollectionViewController {
 
     private func makeDataSource() -> DataSource {
         // Create cell config
-        let cellRegistration = UICollectionView.CellRegistration {
-            (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: String) in
-            
-            // get reminder and assign to cell
-            let reminder = Reminder.sampleData[indexPath.item]
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = reminder.title
-            cell.contentConfiguration = contentConfiguration
-        }
+        let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
         
         // Create data source
         return DataSource(collectionView: collectionView) {
@@ -63,7 +52,7 @@ class ReminderListViewController: UICollectionViewController {
         // create empty snaphot
         var snapshot = Snapshot()
         snapshot.appendSections([0]) // adding single section
-        var reminderTitles = Reminder.sampleData.map { $0.title }
+        let reminderTitles = Reminder.sampleData.map { $0.title }
         snapshot.appendItems(reminderTitles) // add titles as snaphot items
         
         return snapshot
