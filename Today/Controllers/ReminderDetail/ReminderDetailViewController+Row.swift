@@ -1,5 +1,5 @@
 //
-//  ReminderViewController+Row.swift
+//  ReminderDetailViewController+Row.swift
 //  Today
 //
 //  Created by hybrayhem.
@@ -7,7 +7,8 @@
 
 import UIKit
 
-extension ReminderViewController {
+// Configure image and text style from single enum
+extension ReminderDetailViewController {
     enum Row: Hashable {
         case date
         case notes

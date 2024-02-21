@@ -8,6 +8,8 @@
 import UIKit
 
 class ReminderListViewController: UICollectionViewController {
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Reminder.ID> // same generics with data source
+    
     var dataSource: DataSource! // implicitly unwrap DataSource
     var reminders: [Reminder] = Reminder.sampleData
     
@@ -44,4 +46,3 @@ class ReminderListViewController: UICollectionViewController {
         dataSource.apply(snapshot)
     }
 }
-

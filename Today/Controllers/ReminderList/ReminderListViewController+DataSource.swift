@@ -10,7 +10,6 @@ import UIKit
 extension ReminderListViewController {
     // Init
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Reminder.ID> // diffable
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Reminder.ID> // same generics with data source
     
     func makeDataSource() -> DataSource {
         // Create cell config
