@@ -20,7 +20,7 @@ class ReminderListViewController: UICollectionViewController {
         // Init Data Source
         dataSource = makeDataSource()
         
-        dataSource.apply(initialSnapshot()) // reflects the changes in UI
+        updateSnapshot() // reflects the changes in UI
 
         collectionView.dataSource = dataSource
     }
@@ -32,5 +32,14 @@ class ReminderListViewController: UICollectionViewController {
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }
     
+    func updateSnapshot() {
+        // create empty snaphot
+        var snapshot = Snapshot()
+        snapshot.appendSections([0]) // adding single section
+        let reminderTitles = reminders.map { $0.id }
+        snapshot.appendItems(reminderTitles) // add titles as snaphot items
+        
+        dataSource.apply(snapshot)
+    }
 }
 

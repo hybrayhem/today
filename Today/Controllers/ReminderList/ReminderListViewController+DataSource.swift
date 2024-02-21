@@ -28,21 +28,11 @@ extension ReminderListViewController {
         }
     }
     
-    func initialSnapshot() -> Snapshot {
-        // create empty snaphot
-        var snapshot = Snapshot()
-        snapshot.appendSections([0]) // adding single section
-        let reminderTitles = reminders.map { $0.title }
-        snapshot.appendItems(reminderTitles) // add titles as snaphot items
-        
-        return snapshot
-    }
-    
     private func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, id: Reminder.ID) {
+        print(id)
         //* Content
         // get reminder and fill into cell
-        let reminder = reminders.reminder(withId: id)
-//        let reminder = reminders[indexPath.item]
+        let reminder = reminders.get(fromId: id) // old: let reminder = reminders[indexPath.item]
         var contentConfiguration = cell.defaultContentConfiguration()
         
         // title
@@ -78,8 +68,10 @@ extension ReminderListViewController {
         let image = UIImage(systemName: symbolName, withConfiguration: symbolConfiguration)
         
         // button
-        let button = UIButton()
+        let button = ReminderDoneButton()
         button.setImage(image, for: .normal)
+        button.id = reminder.id
+        button.addTarget(self, action: #selector(didPressDoneButton(_:)), for: .touchUpInside)
         
         return UICellAccessory.CustomViewConfiguration(
             customView: button, placement: .leading(displayed: .always))

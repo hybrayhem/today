@@ -17,20 +17,27 @@ struct Reminder: Identifiable {
 
 extension [Reminder] {
     func indexOfReminder(withId id: Reminder.ID) -> Self.Index {
+        print(id)
         guard let index = firstIndex(where: { $0.id == id }) else {
             fatalError()
         }
         return index
     }
     
-    func reminder(withId id: Reminder.ID) -> Reminder {
+    func get(fromId id: Reminder.ID) -> Reminder {
         let index = self.indexOfReminder(withId: id)
         return self[index]
     }
     
-    mutating func updateReminder(_ reminder: Reminder) {
+    mutating func update(_ reminder: Reminder) {
         let index = self.indexOfReminder(withId: reminder.id)
         self[index] = reminder
+    }
+    
+    mutating func complete(id: Reminder.ID) {
+        var reminder = get(fromId: id)
+        reminder.isComplete.toggle()
+        update(reminder)
     }
 }
 
