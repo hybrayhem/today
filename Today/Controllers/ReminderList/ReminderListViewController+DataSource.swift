@@ -8,13 +8,41 @@
 import UIKit
 
 extension ReminderListViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, String> // diffable
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String> // same generics with data source
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, Reminder.ID> // diffable
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Reminder.ID> // same generics with data source
     
-    func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, id: String) {
+    func makeDataSource() -> DataSource {
+        // Create cell config
+        let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
+        
+        // Create data source
+        return DataSource(collectionView: collectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: Reminder.ID) in
+            
+            // dequeue and return a cell using the cell registration
+            return collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration,
+                for: indexPath,
+                item: itemIdentifier
+            )
+        }
+    }
+    
+    func initialSnapshot() -> Snapshot {
+        // create empty snaphot
+        var snapshot = Snapshot()
+        snapshot.appendSections([0]) // adding single section
+        let reminderTitles = reminders.map { $0.title }
+        snapshot.appendItems(reminderTitles) // add titles as snaphot items
+        
+        return snapshot
+    }
+    
+    private func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, id: Reminder.ID) {
         //* Content
         // get reminder and fill into cell
-        let reminder = Reminder.sampleData[indexPath.item]
+        let reminder = reminders.reminder(withId: id)
+//        let reminder = reminders[indexPath.item]
         var contentConfiguration = cell.defaultContentConfiguration()
         
         // title
