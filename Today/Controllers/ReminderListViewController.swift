@@ -9,7 +9,7 @@ import UIKit
 
 class ReminderListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, String> // diffable
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String> // same generics with data source
     
     var dataSource: DataSource! // implicitly unwrap DataSource
     
