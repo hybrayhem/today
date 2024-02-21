@@ -15,6 +15,6 @@ extension ReminderListViewController {
     
     private func completeReminder(withId id: Reminder.ID) {
         reminders.complete(id: id)
-        updateSnapshot()
+        updateSnapshot(reloading: [id])
     }
 }

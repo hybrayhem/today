@@ -32,13 +32,15 @@ class ReminderListViewController: UICollectionViewController {
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }
     
-    func updateSnapshot() {
-        // create empty snaphot
+    func updateSnapshot(reloading ids: [Reminder.ID] = []) {
         var snapshot = Snapshot()
         snapshot.appendSections([0]) // adding single section
         let reminderTitles = reminders.map { $0.id }
         snapshot.appendItems(reminderTitles) // add titles as snaphot items
         
+        if !ids.isEmpty {
+            snapshot.reloadItems(ids)
+        }
         dataSource.apply(snapshot)
     }
 }

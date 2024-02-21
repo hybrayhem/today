@@ -29,7 +29,6 @@ extension ReminderListViewController {
     }
     
     private func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, id: Reminder.ID) {
-        print(id)
         //* Content
         // get reminder and fill into cell
         let reminder = reminders.get(fromId: id) // old: let reminder = reminders[indexPath.item]
