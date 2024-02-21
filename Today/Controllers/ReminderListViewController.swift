@@ -9,15 +9,17 @@ import UIKit
 
 class ReminderListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, String> // diffable
-    var dataSource: DataSource!
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String>
+    
+    var dataSource: DataSource! // implicitly unwrap DataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // init layout
+        // Init layout
         collectionView.collectionViewLayout = listLayout()
         
-        // create cell config
+        // Create cell config
         let cellRegistration = UICollectionView.CellRegistration {
             (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: String) in
             
@@ -28,7 +30,7 @@ class ReminderListViewController: UICollectionViewController {
             cell.contentConfiguration = contentConfiguration
         }
         
-        // create data source
+        // Create data source
         dataSource = DataSource(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: String) in
             
@@ -39,6 +41,18 @@ class ReminderListViewController: UICollectionViewController {
                 item: itemIdentifier
             )
         }
+        
+        //     create emtpy snaphot
+        var snapshot = Snapshot()
+        snapshot.appendSections([0]) // adding single section
+        var reminderTitles = Reminder.sampleData.map { $0.title }
+        snapshot.appendItems(reminderTitles) // add titles as snaphot items
+        
+        //     reflects the changes in UI
+        dataSource.apply(snapshot)
+        
+        // Assign data source
+        collectionView.dataSource = dataSource
     }
     
     private func listLayout() -> UICollectionViewCompositionalLayout {
