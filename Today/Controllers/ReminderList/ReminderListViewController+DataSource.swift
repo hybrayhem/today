@@ -12,6 +12,7 @@ extension ReminderListViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String> // same generics with data source
     
     func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, id: String) {
+        // CONTENT
         // get reminder and fill into cell
         let reminder = Reminder.sampleData[indexPath.item]
         var contentConfiguration = cell.defaultContentConfiguration()
@@ -25,5 +26,10 @@ extension ReminderListViewController {
             forTextStyle: .caption1)
         
         cell.contentConfiguration = contentConfiguration
+        
+        // BACKGROUND
+        var backgroundConfiguration = UIBackgroundConfiguration.listGroupedCell()
+        backgroundConfiguration.backgroundColor = .todayListCellBackground
+        cell.backgroundConfiguration = backgroundConfiguration
     }
 }
