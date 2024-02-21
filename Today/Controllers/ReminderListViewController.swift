@@ -19,6 +19,22 @@ class ReminderListViewController: UICollectionViewController {
         // Init layout
         collectionView.collectionViewLayout = listLayout()
         
+        // Init Data Source
+        dataSource = makeDataSource()
+        
+        dataSource.apply(initialSnapshot()) // reflects the changes in UI
+
+        collectionView.dataSource = dataSource
+    }
+    
+    private func listLayout() -> UICollectionViewCompositionalLayout {
+        var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        listConfiguration.showsSeparators = false
+        listConfiguration.backgroundColor = .clear
+        return UICollectionViewCompositionalLayout.list(using: listConfiguration)
+    }
+
+    private func makeDataSource() -> DataSource {
         // Create cell config
         let cellRegistration = UICollectionView.CellRegistration {
             (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: String) in
@@ -31,7 +47,7 @@ class ReminderListViewController: UICollectionViewController {
         }
         
         // Create data source
-        dataSource = DataSource(collectionView: collectionView) {
+        return DataSource(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: String) in
             
             // dequeue and return a cell using the cell registration
@@ -41,26 +57,17 @@ class ReminderListViewController: UICollectionViewController {
                 item: itemIdentifier
             )
         }
-        
-        //     create emtpy snaphot
+    }
+    
+    private func initialSnapshot() -> Snapshot {
+        // create empty snaphot
         var snapshot = Snapshot()
         snapshot.appendSections([0]) // adding single section
         var reminderTitles = Reminder.sampleData.map { $0.title }
         snapshot.appendItems(reminderTitles) // add titles as snaphot items
         
-        //     reflects the changes in UI
-        dataSource.apply(snapshot)
-        
-        // Assign data source
-        collectionView.dataSource = dataSource
+        return snapshot
     }
     
-    private func listLayout() -> UICollectionViewCompositionalLayout {
-        var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
-        listConfiguration.showsSeparators = false
-        listConfiguration.backgroundColor = .clear
-        return UICollectionViewCompositionalLayout.list(using: listConfiguration)
-    }
-
 }
 
