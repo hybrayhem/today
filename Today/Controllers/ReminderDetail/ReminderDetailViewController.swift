@@ -8,7 +8,7 @@
 import UIKit
 
 class ReminderDetailViewController: UICollectionViewController {
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Row>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Row>
     
     var reminder: Reminder
     private var dataSource: DataSource!
@@ -57,9 +57,18 @@ class ReminderDetailViewController: UICollectionViewController {
     
     private func updateSnapshot() {
         var snapshot = Snapshot()
-        snapshot.appendSections([0])
-        snapshot.appendItems([Row.title, Row.date, Row.time, Row.notes], toSection: 0)
+        snapshot.appendSections([.view])
+        snapshot.appendItems([Row.title, Row.date, Row.time, Row.notes], toSection: .view)
+        
         dataSource.apply(snapshot)
+    }
+    
+    private func section(for indexPath: IndexPath) -> Section {
+        let sectionNumber = isEditing ? indexPath.section + 1 : indexPath.section // In view mode, all items are displayed in section 0. In editing mode, the title, date, and notes are separated into sections.
+        guard let section = Section(rawValue: sectionNumber) else {
+            fatalError("Unable to find matching section")
+        }
+        return section
     }
 }
 

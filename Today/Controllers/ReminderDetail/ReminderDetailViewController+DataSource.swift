@@ -8,7 +8,7 @@
 import UIKit
 
 extension ReminderDetailViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, Row>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Row>
     
     func makeDataSource() -> DataSource {
         let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
