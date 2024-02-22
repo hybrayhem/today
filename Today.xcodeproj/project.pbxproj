@@ -24,6 +24,8 @@
 		5508BD902B861AB7009A2858 /* ReminderDetailViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD8F2B861AB7009A2858 /* ReminderDetailViewController+DataSource.swift */; };
 		5508BD922B865233009A2858 /* ReminderDetailViewController+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD912B865233009A2858 /* ReminderDetailViewController+Section.swift */; };
 		5508BD942B87A104009A2858 /* ReminderDetailViewController+CellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD932B87A104009A2858 /* ReminderDetailViewController+CellConfiguration.swift */; };
+		5508BD982B87D97F009A2858 /* UIView+PinnedSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD972B87D97F009A2858 /* UIView+PinnedSubview.swift */; };
+		5508BD9A2B87DB40009A2858 /* TextFieldContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD992B87DB40009A2858 /* TextFieldContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		5508BD8F2B861AB7009A2858 /* ReminderDetailViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderDetailViewController+DataSource.swift"; sourceTree = "<group>"; };
 		5508BD912B865233009A2858 /* ReminderDetailViewController+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderDetailViewController+Section.swift"; sourceTree = "<group>"; };
 		5508BD932B87A104009A2858 /* ReminderDetailViewController+CellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderDetailViewController+CellConfiguration.swift"; sourceTree = "<group>"; };
+		5508BD972B87D97F009A2858 /* UIView+PinnedSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+PinnedSubview.swift"; sourceTree = "<group>"; };
+		5508BD992B87DB40009A2858 /* TextFieldContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +115,8 @@
 		5508BD772B85DAFB009A2858 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5508BD672B83E846009A2858 /* Main.storyboard */,
-				5508BD6C2B83E848009A2858 /* LaunchScreen.storyboard */,
+				5508BD952B87D941009A2858 /* Common */,
+				5508BD962B87D946009A2858 /* ContentViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				5508BD7E2B85E3EE009A2858 /* Date+Today.swift */,
+				5508BD972B87D97F009A2858 /* UIView+PinnedSubview.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -154,6 +159,23 @@
 				5508BD932B87A104009A2858 /* ReminderDetailViewController+CellConfiguration.swift */,
 			);
 			path = ReminderDetail;
+			sourceTree = "<group>";
+		};
+		5508BD952B87D941009A2858 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5508BD672B83E846009A2858 /* Main.storyboard */,
+				5508BD6C2B83E848009A2858 /* LaunchScreen.storyboard */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		5508BD962B87D946009A2858 /* ContentViews */ = {
+			isa = PBXGroup;
+			children = (
+				5508BD992B87DB40009A2858 /* TextFieldContentView.swift */,
+			);
+			path = ContentViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,12 +250,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5508BD982B87D97F009A2858 /* UIView+PinnedSubview.swift in Sources */,
 				5508BD862B86096C009A2858 /* ReminderListViewController+Actions.swift in Sources */,
 				5508BD902B861AB7009A2858 /* ReminderDetailViewController+DataSource.swift in Sources */,
 				5508BD662B83E846009A2858 /* ReminderListViewController.swift in Sources */,
 				5508BD7F2B85E3EE009A2858 /* Date+Today.swift in Sources */,
 				5508BD622B83E846009A2858 /* AppDelegate.swift in Sources */,
 				5508BD642B83E846009A2858 /* SceneDelegate.swift in Sources */,
+				5508BD9A2B87DB40009A2858 /* TextFieldContentView.swift in Sources */,
 				5508BD882B861770009A2858 /* ReminderDetailViewController.swift in Sources */,
 				5508BD8E2B8618F0009A2858 /* ReminderDetailViewController+Row.swift in Sources */,
 				5508BD942B87A104009A2858 /* ReminderDetailViewController+CellConfiguration.swift in Sources */,
