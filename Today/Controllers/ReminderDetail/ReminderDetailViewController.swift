@@ -72,9 +72,20 @@ class ReminderDetailViewController: UICollectionViewController {
         
         snapshot.appendSections([.title, .date, .notes])
         
-        snapshot.appendItems([.header(Section.title.name), .editableText(reminder.title)], toSection: .title)
-        snapshot.appendItems([.header(Section.date.name)], toSection: .date)
-        snapshot.appendItems([.header(Section.notes.name)], toSection: .notes)
+        snapshot.appendItems(
+            [.header(Section.title.name), .editableText(reminder.title)],
+            toSection: .title
+        )
+
+        snapshot.appendItems(
+            [.header(Section.date.name), .editableDate(reminder.dueDate)],
+            toSection: .date
+        )
+        
+        snapshot.appendItems(
+            [.header(Section.notes.name), .editableText(reminder.notes)],
+            toSection: .notes
+        )
         
         dataSource.apply(snapshot)
     }
