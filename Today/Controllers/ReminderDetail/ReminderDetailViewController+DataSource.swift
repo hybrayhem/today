@@ -21,25 +21,19 @@ extension ReminderDetailViewController {
     }
     
     private func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, row: Row) {
-        var contentConfiguration = cell.defaultContentConfiguration()
-        
         let section = section(for: indexPath)
+        
         switch (section, row) {
         case (_, .header(let title)):
-            contentConfiguration.text = title
+            cell.contentConfiguration = headerConfiguration(for: cell, title: title)
             
         case (.view, _):
-            contentConfiguration.text = text(for: row)
-            contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: row.textStyle)
-            contentConfiguration.image = row.image
-        
-//        case(.edit, _):
+            cell.contentConfiguration = defaultConfiguration(for: cell, at: row)
             
         default:
             fatalError("Unexpected combination of section and row.")
         }
         
-        cell.contentConfiguration = contentConfiguration
         cell.tintColor = .todayPrimaryTint
     }
         
