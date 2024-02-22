@@ -22,19 +22,32 @@ extension ReminderDetailViewController {
     
     private func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, row: Row) {
         var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = text(for: row)
-        contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: row.textStyle)
-        contentConfiguration.image = row.image
+        
+        let section = section(for: indexPath)
+        switch (section, row) {
+        case (_, .header(let title)):
+            contentConfiguration.text = title
+            
+        case (.view, _):
+            contentConfiguration.text = text(for: row)
+            contentConfiguration.textProperties.font = UIFont.preferredFont(forTextStyle: row.textStyle)
+            contentConfiguration.image = row.image
+        
+//        case(.edit, _):
+            
+        default:
+            fatalError("Unexpected combination of section and row.")
+        }
+        
         cell.contentConfiguration = contentConfiguration
         cell.tintColor = .todayPrimaryTint
     }
-    
-    private func text(for row: Row) -> String? {
-        switch row {
-        case .date: return reminder.dueDate.dayText
-        case .notes: return reminder.notes
-        case .time: return reminder.dueDate.formatted(date: .omitted, time: .shortened)
-        case .title: return reminder.title
+        
+    private func section(for indexPath: IndexPath) -> Section {
+        let sectionNumber = isEditing ? indexPath.section + 1 : indexPath.section // In view mode, all items are displayed in section 0. In editing mode, the title, date, and notes are separated into sections.
+        guard let section = Section(rawValue: sectionNumber) else {
+            fatalError("Unable to find matching section")
         }
+        return section
     }
 }

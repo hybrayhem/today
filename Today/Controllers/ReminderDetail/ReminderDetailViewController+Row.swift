@@ -10,6 +10,7 @@ import UIKit
 // Configure image and text style from single enum
 extension ReminderDetailViewController {
     enum Row: Hashable {
+        case header(String)
         case date
         case notes
         case time
@@ -35,6 +36,16 @@ extension ReminderDetailViewController {
             case .title: return .headline
             default: return .subheadline
             }
+        }
+    }
+    
+    func text(for row: Row) -> String? {
+        switch row {
+        case .date: return reminder.dueDate.dayText
+        case .notes: return reminder.notes
+        case .time: return reminder.dueDate.formatted(date: .omitted, time: .shortened)
+        case .title: return reminder.title
+        default: return nil
         }
     }
 }

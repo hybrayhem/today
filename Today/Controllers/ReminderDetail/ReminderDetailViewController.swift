@@ -30,45 +30,53 @@ class ReminderDetailViewController: UICollectionViewController {
         if #available(iOS 16, *) {
             navigationItem.style = .navigator
         }
-//        else {
-//            let appearance = UINavigationBarAppearance()
-//            appearance.configureWithDefaultBackground()
-//            
-//            appearance.backgroundColor = .systemBlue
-//            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-//            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-//
-//            UINavigationBar.appearance().standardAppearance = appearance
-//            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//        }
         navigationItem.title = NSLocalizedString("Reminder", comment: "Reminder view controller title")
+        navigationItem.rightBarButtonItem = editButtonItem
         
         dataSource = makeDataSource()
-        updateSnapshot()
+        updateSnapshotForViewing()
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        if editing {
+            updateSnapshotForEditing()
+        } else {
+            updateSnapshotForViewing()
+        }
     }
     
     //
     
     private static func listLayout() -> UICollectionViewCompositionalLayout {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        
         listConfiguration.showsSeparators = false
+        listConfiguration.headerMode = .firstItemInSection
+        
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }
     
-    private func updateSnapshot() {
+    private func updateSnapshotForViewing() {
         var snapshot = Snapshot()
+        
         snapshot.appendSections([.view])
-        snapshot.appendItems([Row.title, Row.date, Row.time, Row.notes], toSection: .view)
+        snapshot.appendItems([Row.header(""), Row.title, Row.date, Row.time, Row.notes], toSection: .view)
         
         dataSource.apply(snapshot)
     }
     
-    private func section(for indexPath: IndexPath) -> Section {
-        let sectionNumber = isEditing ? indexPath.section + 1 : indexPath.section // In view mode, all items are displayed in section 0. In editing mode, the title, date, and notes are separated into sections.
-        guard let section = Section(rawValue: sectionNumber) else {
-            fatalError("Unable to find matching section")
-        }
-        return section
+    private func updateSnapshotForEditing() {
+        var snapshot = Snapshot()
+        
+        snapshot.appendSections([.title, .date, .notes])
+        
+        snapshot.appendItems([.header(Section.title.name)], toSection: .title)
+        snapshot.appendItems([.header(Section.date.name)], toSection: .date)
+        snapshot.appendItems([.header(Section.notes.name)], toSection: .notes)
+        
+        dataSource.apply(snapshot)
     }
 }
 
