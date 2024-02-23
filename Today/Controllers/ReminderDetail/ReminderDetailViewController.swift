@@ -16,6 +16,7 @@ class ReminderDetailViewController: UICollectionViewController {
         }
     }
     var workingReminder: Reminder // temp reminder used in editing mode, saved or discarded after
+    var isAddingNewReminder: Bool = false // indicate editing or creating a reminder
     var onChange: (Reminder) -> Void
     private var dataSource: DataSource!
     
@@ -50,6 +51,8 @@ class ReminderDetailViewController: UICollectionViewController {
         
         if editing {
             prepareForEditing()
+        } else if isAddingNewReminder {
+            prepareForAdding()
         } else {
             prepareForViewing()
         }
@@ -69,6 +72,10 @@ class ReminderDetailViewController: UICollectionViewController {
     @objc func didCancelEdit() {
         workingReminder = reminder // reset workingReminder
         setEditing(false, animated: true)
+    }
+    
+    private func prepareForAdding() {
+        onChange(workingReminder) // Update page with this empty reminder
     }
     
     private func prepareForViewing() {

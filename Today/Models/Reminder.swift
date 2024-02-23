@@ -38,6 +38,10 @@ extension [Reminder] {
         reminder.isComplete.toggle()
         update(reminder)
     }
+    
+    mutating func add(_ reminder: Reminder) {
+        self.append(reminder)
+    }
 }
 
 #if DEBUG

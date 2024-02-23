@@ -19,6 +19,9 @@ class ReminderListViewController: UICollectionViewController {
         // Init layout
         collectionView.collectionViewLayout = listLayout()
         
+        // Add 'add' button
+        initAddButton()
+        
         // Init Data Source
         dataSource = makeDataSource()
         
@@ -32,6 +35,23 @@ class ReminderListViewController: UICollectionViewController {
         listConfiguration.showsSeparators = false
         listConfiguration.backgroundColor = .clear
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
+    }
+    
+    private func initAddButton() {
+        let addButton = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(didPressAddButton(_:))
+        )
+        addButton.accessibilityLabel = NSLocalizedString(
+            "Add reminder",
+            comment: "Add button accessibility label"
+        )
+        
+        navigationItem.rightBarButtonItem = addButton
+        if #available(iOS 16, *) {
+            navigationItem.style = .navigator
+        }
     }
     
     func updateSnapshot(reloading ids: [Reminder.ID] = []) {

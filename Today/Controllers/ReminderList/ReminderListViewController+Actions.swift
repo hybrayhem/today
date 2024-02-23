@@ -30,4 +30,35 @@ extension ReminderListViewController {
         pushDetailViewForReminder(withId: id)
         return false
     }
+    
+    // Add Reminder
+    @objc func didPressAddButton(_ sender: UIBarButtonItem) {
+        let reminder = Reminder(title: "", dueDate: Date.now)
+        
+        // Create View
+        let viewController = ReminderDetailViewController(reminder: reminder) { [weak self]reminder in
+            self?.reminders.add(reminder)
+            self?.updateSnapshot()
+            self?.dismiss(animated: true)
+        }
+        viewController.isAddingNewReminder = true
+        viewController.setEditing(true, animated: false)
+        
+        // Navigation Buttons
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(didCancelAdd(_:))
+        )
+        viewController.navigationItem.title = NSLocalizedString("Add Reminder", comment: "Add Reminder view controller title")
+        
+        // Present View
+        let navigationController = UINavigationController(rootViewController: viewController)
+        present(navigationController, animated: true)
+    }
+    
+    
+    @objc func didCancelAdd(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
 }
