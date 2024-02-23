@@ -28,6 +28,8 @@ class ReminderListViewController: UICollectionViewController {
         // Add 'add' button
         initAddButton()
         
+        initSegmentedControl()
+        
         // Init Data Source
         dataSource = makeDataSource()
         
@@ -42,6 +44,17 @@ class ReminderListViewController: UICollectionViewController {
         listConfiguration.backgroundColor = .clear
         listConfiguration.trailingSwipeActionsConfigurationProvider = makeSwipeActions
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
+    }
+    
+    private func initSegmentedControl() {
+        let listStyleSegmentedControl = UISegmentedControl(items: [
+            ReminderListStyle.today.name, ReminderListStyle.future.name, ReminderListStyle.all.name
+        ])
+        
+        listStyleSegmentedControl.selectedSegmentIndex = listStyle.rawValue
+        listStyleSegmentedControl.addTarget(self, action: #selector(didChangeListStyle(_:)), for: .valueChanged)
+        
+        navigationItem.titleView = listStyleSegmentedControl
     }
     
     private func initAddButton() {
