@@ -63,5 +63,10 @@ extension UICollectionViewListCell {
 
 @available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
-    TextFieldContentView(TextFieldContentView.Configuration())
+    let view = TextFieldContentView(TextFieldContentView.Configuration())
+    
+    let vc = UIViewController()
+    vc.view.addPinnedSubview(view)
+    let navc = UINavigationController(rootViewController: vc)
+    return navc
 }
