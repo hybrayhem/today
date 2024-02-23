@@ -42,6 +42,11 @@ extension [Reminder] {
     mutating func add(_ reminder: Reminder) {
         self.append(reminder)
     }
+    
+    mutating func delete(withId id: Reminder.ID) {
+        let index = self.indexOfReminder(withId: id)
+        self.remove(at: index)
+    }
 }
 
 #if DEBUG
