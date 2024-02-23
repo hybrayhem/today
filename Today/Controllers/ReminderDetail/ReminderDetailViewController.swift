@@ -60,7 +60,14 @@ class ReminderDetailViewController: UICollectionViewController {
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }
     
+    @objc func didCancelEdit() {
+        workingReminder = reminder // reset workingReminder
+        setEditing(false, animated: true)
+    }
+    
     private func prepareForViewing() {
+        navigationItem.leftBarButtonItem = nil
+        
         if workingReminder != reminder {
             reminder = workingReminder
         }
@@ -68,6 +75,12 @@ class ReminderDetailViewController: UICollectionViewController {
     }
     
     private func prepareForEditing() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(didCancelEdit)
+        )
+        
         updateSnapshotForEditing()
     }
     
