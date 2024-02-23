@@ -10,13 +10,19 @@ import UIKit
 class ReminderDetailViewController: UICollectionViewController {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Row>
     
-    var reminder: Reminder
+    var reminder: Reminder {
+        didSet {
+            onChange(reminder)
+        }
+    }
     var workingReminder: Reminder // temp reminder used in editing mode, saved or discarded after
+    var onChange: (Reminder) -> Void
     private var dataSource: DataSource!
     
-    init(reminder: Reminder) {
+    init(reminder: Reminder, onChange: @escaping (Reminder) -> Void) {
         self.reminder = reminder
         self.workingReminder = reminder
+        self.onChange = onChange
 
         let listLayout = ReminderDetailViewController.listLayout()
         super.init(collectionViewLayout: listLayout)
@@ -119,5 +125,5 @@ class ReminderDetailViewController: UICollectionViewController {
 
 @available(iOS 17.0, *)
 #Preview {
-    ReminderDetailViewController(reminder: Reminder.sampleData[0])
+    ReminderDetailViewController(reminder: Reminder.sampleData[0], onChange: { _ in })
 }
