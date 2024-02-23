@@ -13,7 +13,7 @@ class ReminderListViewController: UICollectionViewController {
     // List
     var dataSource: DataSource! // implicitly unwrap DataSource
     var reminders: [Reminder] = Reminder.sampleData
-    var listStyle: ReminderListStyle = .all
+    var listStyle: ReminderListStyle = .today
     var filteredReminders: [Reminder] {
         return reminders.filter { listStyle.shouldInclude(date: $0.dueDate) }.sorted {
             $0.dueDate < $1.dueDate
@@ -32,6 +32,12 @@ class ReminderListViewController: UICollectionViewController {
             return $0 + chunk
         }
         return progress
+    }
+    
+    // Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateBackgroundColor()
     }
     
     override func viewDidLoad() {
@@ -57,6 +63,7 @@ class ReminderListViewController: UICollectionViewController {
         collectionView.dataSource = dataSource
     }
     
+    // List
     private func listLayout() -> UICollectionViewCompositionalLayout {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
         listConfiguration.headerMode = .supplementary
@@ -64,46 +71,6 @@ class ReminderListViewController: UICollectionViewController {
         listConfiguration.backgroundColor = .clear
         listConfiguration.trailingSwipeActionsConfigurationProvider = makeSwipeActions
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
-    }
-    
-    func updateSnapshot(reloading idsThatChanged: [Reminder.ID] = []) {
-        let ids = idsThatChanged.filter { id in filteredReminders.contains(where: { $0.id == id }) }
-        
-        var snapshot = Snapshot()
-        snapshot.appendSections([0]) // adding single section
-        let reminderIds = filteredReminders.map { $0.id }
-        snapshot.appendItems(reminderIds) // add titles as snaphot items
-        
-        if !ids.isEmpty {
-            snapshot.reloadItems(ids)
-        }
-        dataSource.apply(snapshot)
-
-        headerView?.progress = progress
-    }
-    
-    private func initSegmentedControl() {
-        listStyleSegmentedControl.selectedSegmentIndex = listStyle.rawValue
-        listStyleSegmentedControl.addTarget(self, action: #selector(didChangeListStyle(_:)), for: .valueChanged)
-        
-        navigationItem.titleView = listStyleSegmentedControl
-    }
-    
-    private func initAddButton() {
-        let addButton = UIBarButtonItem(
-            barButtonSystemItem: .add,
-            target: self,
-            action: #selector(didPressAddButton(_:))
-        )
-        addButton.accessibilityLabel = NSLocalizedString(
-            "Add reminder",
-            comment: "Add button accessibility label"
-        )
-        
-        navigationItem.rightBarButtonItem = addButton
-        if #available(iOS 16, *) {
-            navigationItem.style = .navigator
-        }
     }
     
     private func makeSwipeActions(for indexPath: IndexPath?) -> UISwipeActionsConfiguration? {
@@ -122,6 +89,49 @@ class ReminderListViewController: UICollectionViewController {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
+    func updateSnapshot(reloading idsThatChanged: [Reminder.ID] = []) {
+        let ids = idsThatChanged.filter { id in filteredReminders.contains(where: { $0.id == id }) }
+        
+        var snapshot = Snapshot()
+        snapshot.appendSections([0]) // adding single section
+        let reminderIds = filteredReminders.map { $0.id }
+        snapshot.appendItems(reminderIds) // add titles as snaphot items
+        
+        if !ids.isEmpty {
+            snapshot.reloadItems(ids)
+        }
+        dataSource.apply(snapshot)
+
+        headerView?.progress = progress
+    }
+    
+    // Segmented Control
+    private func initSegmentedControl() {
+        listStyleSegmentedControl.selectedSegmentIndex = listStyle.rawValue
+        listStyleSegmentedControl.addTarget(self, action: #selector(didChangeListStyle(_:)), for: .valueChanged)
+        
+        navigationItem.titleView = listStyleSegmentedControl
+    }
+    
+    // Add Button
+    private func initAddButton() {
+        let addButton = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(didPressAddButton(_:))
+        )
+        addButton.accessibilityLabel = NSLocalizedString(
+            "Add reminder",
+            comment: "Add button accessibility label"
+        )
+        
+        navigationItem.rightBarButtonItem = addButton
+        if #available(iOS 16, *) {
+            navigationItem.style = .navigator
+        }
+    }
+    
+    // Header
     private func initHeader() {
         let headerRegistration = UICollectionView.SupplementaryRegistration(
             elementKind: ProgressHeaderView.elementKind,
@@ -151,5 +161,16 @@ class ReminderListViewController: UICollectionViewController {
                 let progressView = view as? ProgressHeaderView else { return }
         
         progressView.progress = progress
+    }
+    
+    // Background
+    func updateBackgroundColor() {
+        collectionView.backgroundView = nil
+        
+        let backgroundView = UIView()
+        let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: collectionView.frame)
+        backgroundView.layer.addSublayer(gradientLayer)
+        
+        collectionView.backgroundView = backgroundView
     }
 }
