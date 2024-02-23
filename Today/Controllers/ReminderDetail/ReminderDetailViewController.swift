@@ -11,10 +11,12 @@ class ReminderDetailViewController: UICollectionViewController {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Row>
     
     var reminder: Reminder
+    var workingReminder: Reminder // temp reminder used in editing mode, saved or discarded after
     private var dataSource: DataSource!
     
     init(reminder: Reminder) {
         self.reminder = reminder
+        self.workingReminder = reminder
 
         let listLayout = ReminderDetailViewController.listLayout()
         super.init(collectionViewLayout: listLayout)
@@ -41,9 +43,9 @@ class ReminderDetailViewController: UICollectionViewController {
         super.setEditing(editing, animated: animated)
         
         if editing {
-            updateSnapshotForEditing()
+            prepareForEditing()
         } else {
-            updateSnapshotForViewing()
+            prepareForViewing()
         }
     }
     
@@ -56,6 +58,17 @@ class ReminderDetailViewController: UICollectionViewController {
         listConfiguration.headerMode = .firstItemInSection
         
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
+    }
+    
+    private func prepareForViewing() {
+        if workingReminder != reminder {
+            reminder = workingReminder
+        }
+        updateSnapshotForViewing()
+    }
+    
+    private func prepareForEditing() {
+        updateSnapshotForEditing()
     }
     
     private func updateSnapshotForViewing() {
