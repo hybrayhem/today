@@ -12,6 +12,12 @@ class ReminderListViewController: UICollectionViewController {
     
     var dataSource: DataSource! // implicitly unwrap DataSource
     var reminders: [Reminder] = Reminder.sampleData
+    var listStyle: ReminderListStyle = .today
+    var filteredReminders: [Reminder] {
+        return reminders.filter { listStyle.shouldInclude(date: $0.dueDate) }.sorted {
+            $0.dueDate < $1.dueDate
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,11 +77,13 @@ class ReminderListViewController: UICollectionViewController {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    func updateSnapshot(reloading ids: [Reminder.ID] = []) {
+    func updateSnapshot(reloading idsThatChanged: [Reminder.ID] = []) {
+        let ids = idsThatChanged.filter { id in filteredReminders.contains(where: { $0.id == id }) }
+        
         var snapshot = Snapshot()
         snapshot.appendSections([0]) // adding single section
-        let reminderTitles = reminders.map { $0.id }
-        snapshot.appendItems(reminderTitles) // add titles as snaphot items
+        let reminderIds = filteredReminders.map { $0.id }
+        snapshot.appendItems(reminderIds) // add titles as snaphot items
         
         if !ids.isEmpty {
             snapshot.reloadItems(ids)

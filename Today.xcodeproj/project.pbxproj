@@ -29,6 +29,7 @@
 		5508BD9C2B87DE9D009A2858 /* UIContentConfiguration+Stateless.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD9B2B87DE9D009A2858 /* UIContentConfiguration+Stateless.swift */; };
 		5508BD9E2B87E4C9009A2858 /* TextViewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD9D2B87E4C9009A2858 /* TextViewContentView.swift */; };
 		5508BDA02B87E5FD009A2858 /* DatePickerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BD9F2B87E5FD009A2858 /* DatePickerContentView.swift */; };
+		5508BDA22B8900B8009A2858 /* ReminderListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BDA12B8900B8009A2858 /* ReminderListStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		5508BD9B2B87DE9D009A2858 /* UIContentConfiguration+Stateless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentConfiguration+Stateless.swift"; sourceTree = "<group>"; };
 		5508BD9D2B87E4C9009A2858 /* TextViewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewContentView.swift; sourceTree = "<group>"; };
 		5508BD9F2B87E5FD009A2858 /* DatePickerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerContentView.swift; sourceTree = "<group>"; };
+		5508BDA12B8900B8009A2858 /* ReminderListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				5508BD792B85DB27009A2858 /* Reminder.swift */,
+				5508BDA12B8900B8009A2858 /* ReminderListStyle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				5508BD902B861AB7009A2858 /* ReminderDetailViewController+DataSource.swift in Sources */,
 				5508BD662B83E846009A2858 /* ReminderListViewController.swift in Sources */,
 				5508BD7F2B85E3EE009A2858 /* Date+Today.swift in Sources */,
+				5508BDA22B8900B8009A2858 /* ReminderListStyle.swift in Sources */,
 				5508BD9C2B87DE9D009A2858 /* UIContentConfiguration+Stateless.swift in Sources */,
 				5508BD622B83E846009A2858 /* AppDelegate.swift in Sources */,
 				5508BD642B83E846009A2858 /* SceneDelegate.swift in Sources */,

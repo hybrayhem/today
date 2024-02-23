@@ -26,7 +26,7 @@ extension ReminderListViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let id = reminders[indexPath.item].id
+        let id = filteredReminders[indexPath.item].id
         pushDetailViewForReminder(withId: id)
         return false
     }
