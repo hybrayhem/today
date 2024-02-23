@@ -22,6 +22,7 @@ class ProgressHeaderView: UICollectionReusableView { // Kept in reuse queue, whe
     private let upperView = UIView(frame: .zero)
     private let lowerView = UIView(frame: .zero)
     private let containerView = UIView(frame: .zero)
+    private let aspectRatio = 0.5 // Constant
     private var heightConstraint: NSLayoutConstraint?
     
     required init?(coder: NSCoder) {
@@ -55,13 +56,13 @@ class ProgressHeaderView: UICollectionReusableView { // Kept in reuse queue, whe
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         // Container View
-        heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
-        containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1).isActive = true
+        heightAnchor.constraint(equalTo: widthAnchor, multiplier: aspectRatio).isActive = true
+        containerView.widthAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1.0).isActive = true
         
         containerView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        containerView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.85).isActive = true
+        containerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.85).isActive = true
         
         // Upper View
         upperView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -84,6 +85,19 @@ class ProgressHeaderView: UICollectionReusableView { // Kept in reuse queue, whe
         containerView.backgroundColor = .clear
         upperView.backgroundColor = .todayProgressUpperBackground
         lowerView.backgroundColor = .todayProgressLowerBackground
+        
+        // Animation
+        // addWavingAnimation()
+    }
+    
+    private func addWavingAnimation() {
+        let animation = CABasicAnimation(keyPath: "transform.rotation.z")
+        animation.fromValue = -0.05
+        animation.toValue = 0.05
+        animation.duration = 0.5
+        animation.repeatCount = Float.infinity
+        animation.autoreverses = true
+        containerView.layer.add(animation, forKey: "wavingAnimation")
     }
 }
 
