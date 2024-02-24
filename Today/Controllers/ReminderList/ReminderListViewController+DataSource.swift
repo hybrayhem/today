@@ -35,6 +35,18 @@ extension ReminderListViewController {
         updateSnapshot(reloading: [id])
     }
     
+    func addReminder(_ reminder: Reminder) {
+        var reminder = reminder
+        do {
+            let idFromStore = try reminderStore.save(reminder)
+            reminder.id = idFromStore
+            reminders.add(reminder)
+        } catch TodayError.accessDenied {
+        } catch {
+            UIAlertController().showError(error)
+        }
+    }
+    
     func prepareReminderStore() {
         Task {
             do {

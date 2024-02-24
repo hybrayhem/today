@@ -37,6 +37,7 @@
 		5508BDAD2B89427F009A2858 /* Reminder+EKReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BDAC2B89427F009A2858 /* Reminder+EKReminder.swift */; };
 		5508BDAF2B8942E0009A2858 /* ReminderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BDAE2B8942E0009A2858 /* ReminderStore.swift */; };
 		5508BDB12B89B72E009A2858 /* UIAlertController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BDB02B89B72E009A2858 /* UIAlertController+Error.swift */; };
+		5508BDB32B89BEE2009A2858 /* EKReminder+Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508BDB22B89BEE2009A2858 /* EKReminder+Reminder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		5508BDAC2B89427F009A2858 /* Reminder+EKReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+EKReminder.swift"; sourceTree = "<group>"; };
 		5508BDAE2B8942E0009A2858 /* ReminderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderStore.swift; sourceTree = "<group>"; };
 		5508BDB02B89B72E009A2858 /* UIAlertController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Error.swift"; sourceTree = "<group>"; };
+		5508BDB22B89BEE2009A2858 /* EKReminder+Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKReminder+Reminder.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				5508BDAE2B8942E0009A2858 /* ReminderStore.swift */,
 				5508BDAC2B89427F009A2858 /* Reminder+EKReminder.swift */,
 				5508BDAA2B89419E009A2858 /* EKEventStore+AsyncFetch.swift */,
+				5508BDB22B89BEE2009A2858 /* EKReminder+Reminder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				5508BD922B865233009A2858 /* ReminderDetailViewController+Section.swift in Sources */,
 				5508BDAD2B89427F009A2858 /* Reminder+EKReminder.swift in Sources */,
 				5508BDAB2B89419E009A2858 /* EKEventStore+AsyncFetch.swift in Sources */,
+				5508BDB32B89BEE2009A2858 /* EKReminder+Reminder.swift in Sources */,
 				5508BD842B86086F009A2858 /* ReminderDoneButton.swift in Sources */,
 				5508BDA72B893E50009A2858 /* CAGradientLayer+ListStyle.swift in Sources */,
 				5508BD822B85E5C6009A2858 /* ReminderListViewController+DataSource.swift in Sources */,

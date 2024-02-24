@@ -37,7 +37,7 @@ extension ReminderListViewController {
         
         // Create View
         let viewController = ReminderDetailViewController(reminder: reminder) { [weak self]reminder in
-            self?.reminders.add(reminder)
+            self?.addReminder(reminder)
             self?.updateSnapshot()
             self?.dismiss(animated: true)
         }
