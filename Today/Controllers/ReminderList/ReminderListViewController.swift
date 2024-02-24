@@ -63,6 +63,27 @@ class ReminderListViewController: UICollectionViewController {
         collectionView.dataSource = dataSource
         
         prepareReminderStore()
+        
+        initNotifications()
+    }
+    
+    // Notifications
+    private func initNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @objc func willEnterForeground() {
+        prepareReminderStore()
+    }
+
+    @objc func didBecomeActive() {
+        prepareReminderStore()
     }
     
     // List
