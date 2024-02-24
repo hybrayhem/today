@@ -68,4 +68,9 @@ extension ReminderListViewController {
         updateSnapshot()
         updateBackgroundColor()
     }
+    
+    // Reminder Store
+    @objc func eventStoreChanged(_ notification: NSNotification) {
+        reminderStoreChanged()
+    }
 }
