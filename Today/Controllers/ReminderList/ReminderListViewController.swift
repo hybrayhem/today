@@ -12,7 +12,7 @@ class ReminderListViewController: UICollectionViewController {
     
     // List
     var dataSource: DataSource! // implicitly unwrap DataSource
-    var reminders: [Reminder] = Reminder.sampleData
+    var reminders: [Reminder] = []
     var listStyle: ReminderListStyle = .today
     var filteredReminders: [Reminder] {
         return reminders.filter { listStyle.shouldInclude(date: $0.dueDate) }.sorted {
@@ -61,6 +61,8 @@ class ReminderListViewController: UICollectionViewController {
         updateSnapshot() // reflects the changes in UI
 
         collectionView.dataSource = dataSource
+        
+        prepareReminderStore()
     }
     
     // List

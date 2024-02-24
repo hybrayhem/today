@@ -10,6 +10,7 @@ import UIKit
 extension ReminderListViewController {
     // Init
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Reminder.ID> // diffable
+    private var reminderStore: ReminderStore { ReminderStore.shared }
     
     func makeDataSource() -> DataSource {
         // Create cell config
@@ -32,6 +33,22 @@ extension ReminderListViewController {
     func completeReminder(withId id: Reminder.ID) {
         reminders.complete(id: id)
         updateSnapshot(reloading: [id])
+    }
+    
+    func prepareReminderStore() {
+        Task {
+            do {
+                try await reminderStore.requestAccess()
+                reminders = try await reminderStore.readAll()
+            } catch TodayError.accessDenied, TodayError.accessRestricted {
+                #if DEBUG
+                reminders = Reminder.sampleData
+                #endif
+            } catch {
+                UIAlertController().showError(error)
+            }
+            updateSnapshot()
+        }
     }
     
     var reminderCompletedValue: String {

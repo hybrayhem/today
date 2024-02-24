@@ -17,6 +17,30 @@ final class ReminderStore {
         EKEventStore.authorizationStatus(for: .reminder) == .authorized
     }
     
+    func requestAccess() async throws {
+        let status = EKEventStore.authorizationStatus(for: .reminder)
+        
+        switch status {
+        case .authorized, .fullAccess:
+            return
+        
+        case .restricted, .writeOnly:
+            throw TodayError.accessRestricted
+        
+        case .notDetermined:
+            let accessGranted = try await ekStore.requestAccess(to: .reminder)
+            guard accessGranted else {
+                throw TodayError.accessDenied
+            }
+        
+        case .denied:
+            throw TodayError.accessDenied
+        
+        @unknown default: // @unknown ensures switch being exhaustive in future, regardless of default case
+            throw TodayError.unknown
+        }
+    }
+    
     func readAll() async throws -> [Reminder] {
         guard isAvailable else {
             throw TodayError.accessDenied
