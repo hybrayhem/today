@@ -31,7 +31,10 @@ extension ReminderListViewController {
     
     // CRUD
     func completeReminder(withId id: Reminder.ID) {
-        reminders.complete(id: id)
+        var reminder = reminders.get(fromId: id)
+        reminder.isComplete.toggle()
+        updateReminder(reminder)
+        
         updateSnapshot(reloading: [id])
     }
     
@@ -41,6 +44,16 @@ extension ReminderListViewController {
             let idFromStore = try reminderStore.save(reminder)
             reminder.id = idFromStore
             reminders.add(reminder)
+        } catch TodayError.accessDenied {
+        } catch {
+            UIAlertController().showError(error)
+        }
+    }
+    
+    func updateReminder(_ reminder: Reminder) {
+        do {
+            try reminderStore.save(reminder)
+            reminders.update(reminder)
         } catch TodayError.accessDenied {
         } catch {
             UIAlertController().showError(error)

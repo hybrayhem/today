@@ -33,11 +33,10 @@ extension [Reminder] {
         self[index] = reminder
     }
     
-    mutating func complete(id: Reminder.ID) {
-        var reminder = get(fromId: id)
-        reminder.isComplete.toggle()
-        update(reminder)
-    }
+//    mutating func complete(id: Reminder.ID) {
+//        var reminder = get(fromId: id)
+//        reminder.isComplete.toggle()
+//    }
     
     mutating func add(_ reminder: Reminder) {
         self.append(reminder)

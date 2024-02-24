@@ -19,7 +19,7 @@ extension ReminderListViewController {
         let reminder = reminders.get(fromId: id)
         let viewController = ReminderDetailViewController(reminder: reminder) { [weak self] reminder in
             // onChange of Reminder:
-            self?.reminders.update(reminder)
+            self?.updateReminder(reminder)
             self?.updateSnapshot(reloading: [reminder.id])
         }
         navigationController?.pushViewController(viewController, animated: true)
